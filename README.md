@@ -1,5 +1,5 @@
 # node-typescript-template
-Template project for a NodeJS service using Typescript.  Use this as a starting point when creating new services.
+Template project for a NodeJS service using TypeScript.  Use this as a starting point when creating new services.
 
 ## Branches
 
