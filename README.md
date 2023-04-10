@@ -3,6 +3,6 @@ Template project for a NodeJS service using Typescript.  Use this as a starting 
 
 ## Branches
 
-- *master*: The base template, an empty NodeJS project with typescript build support
+- **master**: The base template, an empty NodeJS project with typescript build support
 
-- *nestjs*: Adds basic NestJS support
+- **nestjs**: Adds basic NestJS support
