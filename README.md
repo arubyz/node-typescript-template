@@ -15,6 +15,10 @@ Template project for a [NodeJS](https://nodejs.org/) service using [TypeScript](
 
 ## Commands
 
-- Install runtime and development dependencies: `yarn install`
+- Install all runtime and development dependencies: `yarn install`
 
 - Install only runtime dependencies: `yarn install --production`
+
+- Add a new development dependency: `yarn add --dev <package>`
+
+- Add a new runtime dependency: `yarn add <package>`
