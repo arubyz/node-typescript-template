@@ -9,9 +9,15 @@ Template project for a [NodeJS](https://nodejs.org/) service using [TypeScript](
 
 ## Pre-requisites
 
-- `node`
+- `nvm`: [Node Version Manager](https://github.com/nvm-sh/nvm)
 
-- `yarn`
+## Initial setup
+
+- `nvm install`: Ensure the current verison of node is installed
+
+- `nvm use`: Activate the correct version of node
+
+- `npm install -g yarn`: Make sure yarn is installed
 
 ## Commands
 
