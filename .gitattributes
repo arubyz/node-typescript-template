@@ -1,0 +1,26 @@
+# See: https://kernel.org/pub/software/scm/git/docs/gitattributes.html
+
+# By default, auto-detect if a file is text or binary.  A text file will have its
+# EOLs normalized to LF (Unix-style) inside the repo.  EOL normalization in the
+# worktree is determined by the git client settings. 
+* text=auto
+
+# These files will skip auto-detect and will always be considered text files.
+# EOL normalization in the worktree is determined by the git client settings. 
+*.txt text
+*.js text
+*.json text
+*.ts text
+
+# These files will skip auto-detect and will always be considered binary files,
+# meaning no EOL normalization will occur.
+# *.jpg -text
+
+# These files will always be considered text files, and furthermore their EOLs will
+# always be normalized to CRLF (Windows-style) in the worktree.
+# *.bat text eol=crlf
+# *.cmd text eol=crlf
+
+# These files will always be considered text files, and furthermore their EOLs will
+# always be normalized to LF (Unix-style) in the worktree.
+# *.sh text eol=lf
