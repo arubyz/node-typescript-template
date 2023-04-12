@@ -21,6 +21,8 @@ Template project for a [NodeJS](https://nodejs.org/) service using [TypeScript](
 
 ## Commands
 
+- To configure node within the current shell: `nvm use`
+
 - Install all runtime and development dependencies: `yarn install`
 
 - Install only runtime dependencies: `yarn install --production`
