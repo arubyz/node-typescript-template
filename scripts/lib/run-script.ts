@@ -1,8 +1,6 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
-const scripts_dir = 'scripts';
-
 // The process.argv array is laid out as follows:
 //     argv[0]: the path to the node binary
 //     argv[1]: the path to the root script
@@ -16,10 +14,9 @@ if (script) {
     await run(...args);
 } else {
     console.log('Available scripts:');
-    fs.readdirSync(scripts_dir).forEach(file => {
-        const file_path = path.join(scripts_dir, file);
-        if (!fs.statSync(file_path).isDirectory()) {
-            console.log(`    ${path.parse(file).name}`);
+    fs.readdirSync('scripts', { withFileTypes: true }).forEach(file => {
+        if (!file.isDirectory()) {
+            console.log(`    ${path.parse(file.name).name}`);
         }
     });
     process.exit(1);
