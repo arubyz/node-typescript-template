@@ -1,15 +1,17 @@
-import { argv, $yarn, $tsc } from './lib/utils.js';
+import { $, script } from './lib/utils.js';
+import clean from './clean.js';
+import format from './format.js';
 
-const [cmd] = argv;
+export default script(async ([arg]) => {
+    if (arg?.length && arg !== 'full') {
+        throw new Error('Optional argument must be "full"');
+    }
 
-if (cmd?.length && cmd !== 'full') {
-    throw new Error('Optional argument must be "full"');
-}
-
-if (cmd === 'full') {
-    await $yarn`--silent run:script clean`;
-    await $tsc`--build --force --pretty`;
-    await $yarn`--silent run:script format check`;
-} else {
-    await $tsc`--incremental --pretty`;
-}
+    if (arg === 'full') {
+        await clean();
+        await $`tsc --build --force --pretty`;
+        await format('check');
+    } else {
+        await $`tsc --incremental --pretty`;
+    }
+});

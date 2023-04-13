@@ -1,4 +1,7 @@
 import * as fs from 'fs-extra';
+import { script } from './lib/utils.js';
 
-console.log('Removing ./out ...');
-await fs.remove('./out');
+export default script(async _ => {
+    console.log('Removing ./out ...');
+    await fs.remove('./out');
+});

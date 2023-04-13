@@ -9,11 +9,9 @@
     "description": "Template project for a NodeJS service using TypeScript",
     "main": "src/main.ts",
     "scripts": {
-        "run:js": "node --no-warnings --experimental-json-modules",
-        "run:ts": "node --no-warnings --experimental-json-modules --loader ts-node/esm",
-        "run:script": "yarn --silent run:ts scripts/lib/run-script.js",
+        "script": "node --no-warnings --experimental-json-modules --loader ts-node/esm scripts/lib/run-script.ts",
         "dev": "node --no-warnings --experimental-json-modules --loader ts-node/esm src/main.ts",
-        "start": "yarn --silent run:js out/src/main.js"
+        "start": "node --no-warnings --experimental-json-modules out/src/main.js"
     },
     "dependencies": {
     },

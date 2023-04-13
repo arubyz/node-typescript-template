@@ -1,62 +1,37 @@
 import chalk from "chalk";
-import { $ } from "execa";
+import { $ as $original } from "execa";
 
-// Expose the arguments passed to the root script.  The process.argv array is laid
-// out as follows:
-//     argv[0]: the path to the node binary
-//     argv[1]: the path to the root script
-//     argv[2]: the first argument to the root script
-//     argv[3]: the second argument to the root script
-//     ...
-export const argv = process.argv.slice(2);
+// Top-level exception handler
+async function catch_errors<T>(body: () => Promise<T>): Promise<T> {
+    try {
+        return await body();
+    } catch (e) {
+        if (e instanceof Error) {
+            if ("exitCode" in e && typeof e.exitCode == 'number') {
+                process.exit(e.exitCode);
+            } else {
+                console.log(chalk.red.bold(`\nERROR: ${e.message}\n`));
+                process.exit(1);
+            }
+        } else {
+            throw e;
+        }
+    }
+}
 
-// Exaca doesn't export this type, but we need it to define a function which wraps
-// the $ tagged template function.  We can however extract the type from the second
-// parameter of the non-overloaded 'sync' method.
-type TemplateExpression = Parameters<(typeof $)['sync']>[1];
-
-// There is no direct and type-safe way to construct a literal value that conforms to
-// the TemplateStringsArray type, since it is an array with an extra named field.  The
-// next best option is to create a subclass of Array<string>.
-class SyntheticTemplateStringsArray
-    extends Array<string>
-    implements TemplateStringsArray
-{
-    constructor(public raw: string[], escaped: string[]) {
-        super(...escaped);
+// Used to define a script
+export function script(main: (argv: string[]) => Promise<void>) {
+    return function run(...argv: string[]) {
+        return catch_errors(() => main(argv));
     }
 }
 
 // Default execa settings for script commands
-const $default = $({ stdio: 'inherit', verbose: true });
+const $default = $original({ stdio: 'inherit', verbose: true });
 
-// Creates a JS function shortcut for a command called by a script
-function make_command(command: string) {
-    return async (
-        strings: TemplateStringsArray,
-        ...values: TemplateExpression[]
-    ) => {
-        const new_strings = new SyntheticTemplateStringsArray(
-            [`${command} ${strings.raw[0]}`, ...strings.raw.slice(1)],
-            [`${command} ${strings[0]}`, ...strings.slice(1)]
-        );
-        try {
-            return await $default(new_strings, ...values);
-        } catch (e) {
-            if (e instanceof Error) {
-                if ("exitCode" in e && typeof e.exitCode == 'number') {
-                    process.exit(e.exitCode);
-                } else {
-                    console.log(chalk.red.bold(`\nERROR: ${e.message}\n`));
-                    process.exit(1);
-                }
-            } else {
-                throw e;
-            }
-        }
-    };
-}
-
-// List of command called by scripts
-export const $yarn = make_command('yarn');
-export const $tsc = make_command('tsc');
+// Wrap the execa $ function to catch errors.  Since $ is actually an overloaded
+// function (which doesnt work with the Parameters<> utility type), we use the
+// equivalent parameter type of the non-overloaded 'sync' method instead.
+export function $(...args: Parameters<(typeof $original)['sync']>) {
+    return catch_errors(() => $default(...args));
+};

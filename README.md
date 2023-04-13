@@ -30,3 +30,19 @@ Template project for a [NodeJS](https://nodejs.org/) service using [TypeScript](
 - Add a new development dependency: `yarn add --dev <package>`
 
 - Add a new runtime dependency: `yarn add <package>`
+
+- Start development version: `yarn dev`
+
+- Start production version (after building): `yarn start`
+
+## Scripts
+
+Scripts are located in `/scripts` and run via `yarn script`.
+
+- `build [full]`: Build the production version
+
+- `clean`: Delete build artifacts
+
+- `format <check | write>`: Verify or correct code formatting
+
+- `uninstall`: Delete downloaded dependencies (the opposite of `yarn install`)
