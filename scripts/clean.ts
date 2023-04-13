@@ -1,4 +1,4 @@
-import * as fs from 'fs-extra';
+import fs from 'fs-extra';
 import { script } from './lib/utils.js';
 
 export default script(async _ => {
