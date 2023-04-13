@@ -3,7 +3,7 @@ import { $, script } from './lib/utils.js';
 const src_dir = "./src";
 
 export default script(async ([cmd]) => {
-    if (cmd !== 'check' && cmd !== 'write') {
+    if (cmd !== 'check' && cmd !== 'fix') {
         throw new Error('Must specify either "check" or "write"');
     }
 
